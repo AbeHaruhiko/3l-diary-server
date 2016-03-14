@@ -19,17 +19,17 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.anyRequest().authenticated()
-			.and().httpBasic();
+			.anyRequest().authenticated();
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-// インメモリで認証するパターン		
+			// インメモリで認証するパターン		
 //			.inMemoryAuthentication()
 //			.withUser("user").password("password").roles("USER").and()
 //			.withUser("admin").password("password").roles("USER", "ADMIN");
+			// userテーブルで認証
 			.jdbcAuthentication()
 			.dataSource(dataSource);
 	}
