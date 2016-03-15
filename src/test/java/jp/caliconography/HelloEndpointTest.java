@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 @SpringApplicationConfiguration(classes = App.class)
 @WebAppConfiguration
 @IntegrationTest({"server.port:0",
-        "spring.datasource.url:jdbc:h2:mem:3l-diary-server;DB_CLOSE_ON_EXIT=FALSE"})
+        "spring.datasource.url:jdbc:h2:file:./db/3l-diary;DB_CLOSE_ON_EXIT=FALSE"})
 public class HelloEndpointTest {
     @Value("${local.server.port}")
     int port;
@@ -31,17 +31,17 @@ public class HelloEndpointTest {
     @Test
     public void testHello() throws Exception {
         when().get("/").then()
-                .body(is("Hello World?"));
+                .body(is("Hello World"));
     }
 
-    @Test
-    public void testCalc() throws Exception {
-        given().param("left", 100)
-                .param("right", 200)
-                .get("/calc")
-                .then()
-                .body("left", is(100))
-                .body("right", is(200))
-                .body("answer", is(300));
-    }
+//    @Test
+//    public void testCalc() throws Exception {
+//        given().param("left", 100)
+//                .param("right", 200)
+//                .get("/calc")
+//                .then()
+//                .body("left", is(100))
+//                .body("right", is(200))
+//                .body("answer", is(300));
+//    }
 }

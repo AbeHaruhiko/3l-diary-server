@@ -20,7 +20,7 @@ public class HelloEndpoint {
 
     @GET
     public String hello() {
-        return "Hello World!";
+        return "Hello World";
     }
 
     @Data
