@@ -1,5 +1,6 @@
 ## project
 db/
+*.rdb
 
 ### Java
 *.class
@@ -83,3 +84,6 @@ local.properties
 # Code Recommenders
 .recommenders/
 /3l-diary-server/
+
+# Mac
+.DS_Store
