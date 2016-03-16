@@ -6,21 +6,24 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 @Named
-@Path("/")
+@Path("/api")
 public class HelloEndpoint {
     @Inject
     NamedParameterJdbcTemplate jdbcTemplate;
 
     @GET
     public String hello() {
-        return "Hello World";
+        return "Hello World!!!???";
     }
 
     @Data
@@ -40,5 +43,17 @@ public class HelloEndpoint {
                 .addValue("right", right);
         return jdbcTemplate.queryForObject("SELECT :left + :right AS answer", source,
                 (rs, rowNum) -> new Result(left, right, rs.getLong("answer")));
+    }
+    
+    @Data
+    static class User {
+    	private final String username;
+    }
+    
+    @Path("user")
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public User get(@FormParam("username") String username) {
+    	return new User(username);
     }
 }
