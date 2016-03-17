@@ -25,21 +25,42 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/", "/static/**").permitAll()
+//		http.authorizeRequests()
+//			.antMatchers("/", "/static/**").permitAll();
 //			.antMatchers("/admin").hasRole("ADMIN")
 //			.antMatchers("/api").authenticated()
-			.anyRequest().authenticated();
+//			.anyRequest().authenticated();
 //			.and().httpBasic();
 //		http.formLogin()
 //			.loginPage("/login").permitAll()
 ////			.usernameParameter("user")
 ////			.passwordParameter("password")
 //			.and().logout().permitAll();
+//		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+//		http.formLogin().successHandler(authenticationSuccessHandler);
+//        http.formLogin().failureHandler(authenticationFailureHandler);
+//        http.csrf().disable();
+
+	
+		http.authorizeRequests()
+		.antMatchers("/", "/static/**").permitAll();
+//		.antMatchers("/api/**").authenticated()
+//		.and().httpBasic();
+		http.csrf().disable();
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-		http.formLogin().successHandler(authenticationSuccessHandler);
-        http.formLogin().failureHandler(authenticationFailureHandler);
-        http.csrf().disable();
+		http.formLogin()
+		.loginPage("/").permitAll()
+		.defaultSuccessUrl("/", true)
+		.failureUrl("/");
+//		.successHandler(authenticationSuccessHandler);
+//		http.formLogin().failureHandler(authenticationFailureHandler);
+		
+		
+//		http.authorizeRequests()
+//		.antMatchers("/", "/static/**").permitAll()
+//		.anyRequest().authenticated();
+////        http.httpBasic();
+//        http.csrf().disable();
 	}
 	
 	@Override
