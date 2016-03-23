@@ -27,3 +27,16 @@ CREATE
 	        ,authority
 	    )
 ;
+drop table posts;
+CREATE
+    TABLE
+    	IF NOT EXISTS
+        posts (
+        	id int NOT NULL PRIMARY KEY
+        	,body varchar_ignorecase (4000) NOT NULL
+            ,username varchar_ignorecase (50) NOT NULL
+            ,createdAt timestamp NOT NULL
+            ,updatedAt timestamp NOT NULL
+        )
+;
+

@@ -42,16 +42,16 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.csrf().disable();
 
 	
-		http.authorizeRequests()
-		.antMatchers("/", "/static/**").permitAll();
+//		http.authorizeRequests()
+//		.antMatchers("/", "/static/**").permitAll();
 //		.antMatchers("/api/**").authenticated()
 //		.and().httpBasic();
-		http.csrf().disable();
-		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-		http.formLogin()
-		.loginPage("/").permitAll()
-		.defaultSuccessUrl("/", true)
-		.failureUrl("/");
+//		http.csrf().disable();
+//		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+//		http.formLogin()
+//		.loginPage("/").permitAll()
+//		.defaultSuccessUrl("/", true)
+//		.failureUrl("/");
 //		.successHandler(authenticationSuccessHandler);
 //		http.formLogin().failureHandler(authenticationFailureHandler);
 		
@@ -61,7 +61,14 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.anyRequest().authenticated();
 ////        http.httpBasic();
 //        http.csrf().disable();
-	}
+		http.authorizeRequests().antMatchers("/api/**").authenticated();
+        http.csrf().disable();
+        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+        http.formLogin()
+//        	.loginPage("/")
+        	.successHandler(authenticationSuccessHandler);
+        http.formLogin().failureHandler(authenticationFailureHandler);
+    }
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

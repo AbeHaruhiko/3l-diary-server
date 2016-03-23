@@ -1,8 +1,15 @@
 package jp.caliconography;
 
 import lombok.Data;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import jp.caliconography.domain.Post;
+import jp.caliconography.service.PostService;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,7 +25,11 @@ import javax.ws.rs.core.MediaType;
 @Named
 @Path("/api")
 public class HelloEndpoint {
-    @Inject
+
+	@Autowired
+	PostService PostService;
+
+	@Inject
     NamedParameterJdbcTemplate jdbcTemplate;
 
     @GET
@@ -56,4 +67,14 @@ public class HelloEndpoint {
     public User get(@FormParam("username") String username) {
     	return new User(username);
     }
+    
+//	// 顧客全件取得
+//	@GET
+//	@Path("posts")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	List<Post> getPosts() {
+//		List<Post> Posts = PostService.findAll();
+//		return Posts;
+//	}
+
 }
