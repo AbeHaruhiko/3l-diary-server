@@ -27,7 +27,7 @@ CREATE
 	        ,authority
 	    )
 ;
-drop table posts;
+--drop table posts;
 CREATE
     TABLE
     	IF NOT EXISTS

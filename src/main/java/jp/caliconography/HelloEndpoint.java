@@ -56,6 +56,14 @@ public class HelloEndpoint {
                 (rs, rowNum) -> new Result(left, right, rs.getLong("answer")));
     }
     
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("posts")
+//    public String getPosts() {
+//    	System.out.println("here");
+//        return "posts";
+//    }
+    
     @Data
     static class User {
     	private final String username;

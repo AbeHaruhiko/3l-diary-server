@@ -1,5 +1,7 @@
 package jp.caliconography.api;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Named;
@@ -31,13 +33,23 @@ public class PostRestController {
 	@Autowired
 	PostService PostService;
 
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+////    @Path("posts")
+//    public List<Post> getPosts() {
+//    	System.out.println("here");
+//        return new ArrayList<Post>() {{
+//        	add(new Post(1, "test", "h.abe@s2soft.co.jp", new Date(), new Date()));
+//        }};
+//    }
+
 	// 顧客全件取得
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	List<Post> getPosts() {
+	public List<Post> getPosts() {
 		System.out.println("get posts.");
-		List<Post> Posts = PostService.findAll();
-		return Posts;
+		List<Post> posts = PostService.findAll();
+		return posts;
 	}
 
 	// 顧客一件取得
