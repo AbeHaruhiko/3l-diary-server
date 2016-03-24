@@ -17,6 +17,20 @@ CREATE
             ,CONSTRAINT fk_authorities_users FOREIGN KEY (username) REFERENCES users (username)
         )
 ;
+-- JPAがdomainオブジェクトを見て勝手にやるのでいったん消してみる。
+drop table posts;
+CREATE
+    TABLE
+    	IF NOT EXISTS
+        posts (
+        	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
+        	,body varchar_ignorecase (4000) NOT NULL
+            ,username varchar_ignorecase (50) NOT NULL
+            ,created_at timestamp --NOT NULL
+            ,updated_at timestamp --NOT NULL
+        )
+;
+
 
 CREATE
     UNIQUE index
@@ -27,16 +41,3 @@ CREATE
 	        ,authority
 	    )
 ;
---drop table posts;
-CREATE
-    TABLE
-    	IF NOT EXISTS
-        posts (
-        	id int NOT NULL PRIMARY KEY
-        	,body varchar_ignorecase (4000) NOT NULL
-            ,username varchar_ignorecase (50) NOT NULL
-            ,createdAt timestamp NOT NULL
-            ,updatedAt timestamp NOT NULL
-        )
-;
-

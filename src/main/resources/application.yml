@@ -1,6 +1,9 @@
 # See http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 spring:
-  main.show-banner: false
+  main.banner-mode: CONSOLE
+  jpa:
+    hibernate:
+      ddl-auto: none  # domainを元にDDLを実行する（Drop & Createするかどうか）
   security:
     basic.enabled: false
   datasource:
@@ -8,5 +11,6 @@ spring:
     url: jdbc:h2:file:./db/3l-diary
     username: sa
     password:
+    sqlScriptEncoding: UTF-8  #sqlファイルで日本語を使うための設定
   jersey:
     type: filter

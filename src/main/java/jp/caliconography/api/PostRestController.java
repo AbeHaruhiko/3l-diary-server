@@ -5,11 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Named;
+import javax.ws.rs.BeanParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,21 +39,10 @@ public class PostRestController {
 	@Autowired
 	PostService PostService;
 
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-////    @Path("posts")
-//    public List<Post> getPosts() {
-//    	System.out.println("here");
-//        return new ArrayList<Post>() {{
-//        	add(new Post(1, "test", "h.abe@s2soft.co.jp", new Date(), new Date()));
-//        }};
-//    }
-
 	// 顧客全件取得
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Post> getPosts() {
-		System.out.println("get posts.");
 		List<Post> posts = PostService.findAll();
 		return posts;
 	}
@@ -61,20 +56,41 @@ public class PostRestController {
 		return Post;
 	}
 
-//	// 新規作成
-//	@RequestMapping(method = RequestMethod.POST)
+	// 新規作成
+//	@POST
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
 //	@ResponseStatus(HttpStatus.CREATED)
-//	ResponseEntity<Post> postPosts(@RequestBody Post Post, UriComponentsBuilder uriBuilder) {
-//		Post created = PostService.create(Post);
+//	public ResponseEntity<Post> postPosts(Post post, UriComponentsBuilder uriBuilder) {
+//		Post created = PostService.create(post);
 //		URI location = uriBuilder.path("api/Posts/{id}").buildAndExpand(created.getId()).toUri();
 //		HttpHeaders headers = new HttpHeaders();
 //		headers.setLocation(location);
 //		return new ResponseEntity<>(created, headers, HttpStatus.CREATED);
 //	}
-//
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response postPosts(Post post, @Context UriInfo uriInfo) {
+		Post created = PostService.create(post);
+		URI uri = uriInfo.getAbsolutePathBuilder().path(created.getId()).build();
+		return Response.created(uri).entity(created).build();
+	}
+
+//	@POST
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Post postPosts(Post post) {
+//		System.out.println("################# " + post);
+//		System.out.println("################# postPosts");
+//		Post created = PostService.create(post);
+//		return created;
+//	}
+
 //	// 一件更新
 //	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-//	Post putPost(@PathVariable Integer id, @RequestBody Post Post) {
+//	public Post putPost(@PathVariable Integer id, @RequestBody Post Post) {
 //		Post.setId(id);
 //		return PostService.update(Post);
 //	}
@@ -82,7 +98,7 @@ public class PostRestController {
 //	// 削除
 //	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 //	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	void deletePost(@PathVariable Integer id) {
+//	public void deletePost(@PathVariable Integer id) {
 //		PostService.delete(id);
 //	}
 }

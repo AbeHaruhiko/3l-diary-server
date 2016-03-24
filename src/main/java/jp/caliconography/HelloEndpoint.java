@@ -26,9 +26,6 @@ import javax.ws.rs.core.MediaType;
 @Path("/api")
 public class HelloEndpoint {
 
-	@Autowired
-	PostService PostService;
-
 	@Inject
     NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -55,34 +52,4 @@ public class HelloEndpoint {
         return jdbcTemplate.queryForObject("SELECT :left + :right AS answer", source,
                 (rs, rowNum) -> new Result(left, right, rs.getLong("answer")));
     }
-    
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("posts")
-//    public String getPosts() {
-//    	System.out.println("here");
-//        return "posts";
-//    }
-    
-    @Data
-    static class User {
-    	private final String username;
-    }
-    
-    @Path("user")
-	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public User get(@FormParam("username") String username) {
-    	return new User(username);
-    }
-    
-//	// 顧客全件取得
-//	@GET
-//	@Path("posts")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	List<Post> getPosts() {
-//		List<Post> Posts = PostService.findAll();
-//		return Posts;
-//	}
-
 }

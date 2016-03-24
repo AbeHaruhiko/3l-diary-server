@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.ws.rs.FormParam;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,18 +28,23 @@ public class Post implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	private Integer id;
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	private String id;
 
+//	@FormParam("body")
 	@Column(nullable = false)
 	private String body;
 
+//	@FormParam("username")
 	@Column(nullable = false)
-	private String user;
+	private String username;
 
-	@Column(nullable = false)
+//	@FormParam("createdAt")
+//	@Column(nullable = false)
 	private Date createdAt;
 
-	@Column(nullable = false)
+//	@FormParam("updatedAt")
+//	@Column(nullable = false)
 	private Date updatedAt;
 }
