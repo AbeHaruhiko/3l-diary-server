@@ -18,7 +18,7 @@ CREATE
         )
 ;
 -- JPAがdomainオブジェクトを見て勝手にやるのでいったん消してみる。
-drop table posts;
+--drop table posts;
 CREATE
     TABLE
     	IF NOT EXISTS
@@ -26,8 +26,8 @@ CREATE
         	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
         	,body varchar_ignorecase (4000) NOT NULL
             ,username varchar_ignorecase (50) NOT NULL
-            ,created_at timestamp --NOT NULL
-            ,updated_at timestamp --NOT NULL
+            ,created_at timestamp NOT NULL
+            ,updated_at timestamp NOT NULL
         )
 ;
 
