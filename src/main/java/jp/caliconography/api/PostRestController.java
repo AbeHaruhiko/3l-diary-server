@@ -51,7 +51,7 @@ public class PostRestController {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	Post getPost(@PathParam("id") Integer id) {
+	public Post getPost(@PathParam("id") String id) {
 		Post Post = PostService.findOne(id);
 		return Post;
 	}
@@ -73,6 +73,12 @@ public class PostRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response postPosts(Post post, @Context UriInfo uriInfo) {
+		
+		// 処理時刻をセット
+		Date now = new Date();
+		post.setCreatedAt(now);
+		post.setUpdatedAt(now);
+		
 		Post created = PostService.create(post);
 		URI uri = uriInfo.getAbsolutePathBuilder().path(created.getId()).build();
 		return Response.created(uri).entity(created).build();

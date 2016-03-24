@@ -21,7 +21,7 @@ public class PostService {
 		return PostRepository.findAllOrderByName();
 	}
 
-	public Post findOne(Integer id) {
+	public Post findOne(String id) {
 		return PostRepository.findOne(id);
 	}
 
@@ -33,7 +33,7 @@ public class PostService {
 		return PostRepository.save(Post);
 	}
 
-	public void delete(Integer id) {
+	public void delete(String id) {
 		PostRepository.delete(id);
 	}
 }

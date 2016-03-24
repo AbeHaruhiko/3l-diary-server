@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import jp.caliconography.domain.Post;
 
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface PostRepository extends JpaRepository<Post, String> {
 
 	@Query("select x from Post x order by x.createdAt")
 	List<Post> findAllOrderByName();
