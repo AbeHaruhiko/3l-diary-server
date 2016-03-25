@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -57,18 +58,6 @@ public class PostRestController {
 	}
 
 	// 新規作成
-//	@POST
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public ResponseEntity<Post> postPosts(Post post, UriComponentsBuilder uriBuilder) {
-//		Post created = PostService.create(post);
-//		URI location = uriBuilder.path("api/Posts/{id}").buildAndExpand(created.getId()).toUri();
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(location);
-//		return new ResponseEntity<>(created, headers, HttpStatus.CREATED);
-//	}
-
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -84,16 +73,6 @@ public class PostRestController {
 		return Response.created(uri).entity(created).build();
 	}
 
-//	@POST
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Post postPosts(Post post) {
-//		System.out.println("################# " + post);
-//		System.out.println("################# postPosts");
-//		Post created = PostService.create(post);
-//		return created;
-//	}
-
 //	// 一件更新
 //	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 //	public Post putPost(@PathVariable Integer id, @RequestBody Post Post) {
@@ -107,4 +86,9 @@ public class PostRestController {
 //	public void deletePost(@PathVariable Integer id) {
 //		PostService.delete(id);
 //	}
+	@DELETE
+	@Path("{id}")
+	public void deletePost(@PathParam("id") String id) {
+		PostService.delete(id);
+	}
 }
