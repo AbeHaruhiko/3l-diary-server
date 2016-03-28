@@ -8,18 +8,25 @@ import javax.inject.Named;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +46,26 @@ import jp.caliconography.service.PostService;
 public class PostRestController {
 
 	@Autowired
-	PostService PostService;
+	PostService postService;
 
 	// 顧客全件取得
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Post> getPosts() {
-		List<Post> posts = PostService.findAll();
+	public Page<Post> getPosts(
+			@QueryParam("page") @DefaultValue("0") int page,
+	        @QueryParam("size") @DefaultValue("20") int size,
+	        @QueryParam("sort") @DefaultValue("createdAt") List<String> sort,
+	        @QueryParam("direction") @DefaultValue("desc") String direction) {
+		
+		System.out.println("############### page:" + page + ", size:" + size + ", sort:" + sort + ", direction:" + direction);
+		Page<Post> posts = postService.findAll(
+				new PageRequest(
+	                    page, 
+	                    size, 
+	                    Sort.Direction.fromString(direction), 
+	                    sort.toArray(new String[0])
+	            )
+		);
 		return posts;
 	}
 
@@ -54,7 +74,7 @@ public class PostRestController {
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Post getPost(@PathParam("id") String id) {
-		Post Post = PostService.findOne(id);
+		Post Post = postService.findOne(id);
 		return Post;
 	}
 
@@ -69,7 +89,7 @@ public class PostRestController {
 		post.setCreatedAt(now);
 		post.setUpdatedAt(now);
 		
-		Post created = PostService.create(post);
+		Post created = postService.create(post);
 		URI uri = uriInfo.getAbsolutePathBuilder().path(created.getId()).build();
 		return Response.created(uri).entity(created).build();
 	}
@@ -86,7 +106,7 @@ public class PostRestController {
 		Date now = new Date();
 		post.setUpdatedAt(now);
 
-		return PostService.update(post);
+		return postService.update(post);
 	}
 
 //	// 削除
@@ -98,6 +118,6 @@ public class PostRestController {
 	@DELETE
 	@Path("{id}")
 	public void deletePost(@PathParam("id") String id) {
-		PostService.delete(id);
+		postService.delete(id);
 	}
 }

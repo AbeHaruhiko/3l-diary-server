@@ -1,8 +1,8 @@
 package jp.caliconography.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jp.caliconography.domain.Post;
@@ -17,8 +17,8 @@ public class PostService {
 	// return PostRepository.save(Post);
 	// }
 
-	public List<Post> findAll() {
-		return PostRepository.findAllOrderByName();
+	public Page<Post> findAll(Pageable pageable) {
+		return PostRepository.findAllOrderByName(pageable);
 	}
 
 	public Post findOne(String id) {
