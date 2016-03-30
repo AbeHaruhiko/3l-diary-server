@@ -120,4 +120,12 @@ public class PostRestController {
 	public void deletePost(@PathParam("id") String id) {
 		postService.delete(id);
 	}
+	
+	@GET
+	@Path("/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Post> searchPost(@QueryParam("q") String keyword) {
+		System.out.println("############## api: keyword:" + keyword);
+		return postService.findAsFullTextSearch(keyword);
+	}
 }

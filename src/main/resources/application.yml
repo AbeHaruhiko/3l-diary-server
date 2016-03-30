@@ -4,6 +4,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none  # domainを元にDDLを実行する（Drop & Createするかどうか）
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        search:
+          default:
+            directory_provider: ram
+            # directory_provider: filesystem
+            # indexBase: indexes
+          analyzer: org.apache.lucene.analysis.ja.JapaneseAnalyzer
+          lucene_version: LUCENE_4_10_2
   security:
     basic.enabled: false
   datasource:

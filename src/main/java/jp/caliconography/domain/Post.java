@@ -7,9 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.ws.rs.FormParam;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Indexed
 public class Post implements Serializable {
 
 	/**
@@ -30,21 +34,19 @@ public class Post implements Serializable {
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy = "uuid2")
+	@DocumentId
 	private String id;
 
-//	@FormParam("body")
+	@Field
 	@Column(nullable = false)
 	private String body;
 
-//	@FormParam("username")
 	@Column(nullable = false)
 	private String username;
 
-//	@FormParam("createdAt")
-//	@Column(nullable = false)
+	@Column(nullable = false)
 	private Date createdAt;
 
-//	@FormParam("updatedAt")
-//	@Column(nullable = false)
+	@Column(nullable = false)
 	private Date updatedAt;
 }
