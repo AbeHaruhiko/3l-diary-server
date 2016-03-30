@@ -10,9 +10,9 @@ spring:
         format_sql: true
         search:
           default:
-            directory_provider: ram
-            # directory_provider: filesystem
-            # indexBase: indexes
+            # directory_provider: ram
+            directory_provider: filesystem
+            indexBase: indexes
           analyzer: org.apache.lucene.analysis.ja.JapaneseAnalyzer
           lucene_version: LUCENE_4_10_2
   security:
