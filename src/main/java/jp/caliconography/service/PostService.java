@@ -45,8 +45,8 @@ public class PostService {
 	}
 	
 	 @Transactional(readOnly = true)
-	 public List<Post> findAsFullTextSearch(String keyword) {
+	 public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable) {
 		 System.out.println("############## service: keyword:" + keyword);
-		 return postSearchRepository.searchTitleOrSummary(keyword);
+		 return postSearchRepository.findAsFullTextSearch(keyword, pageable);
 	}
 }

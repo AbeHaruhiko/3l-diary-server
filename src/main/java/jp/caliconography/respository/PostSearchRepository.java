@@ -8,11 +8,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.SortField.Type;
 import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import jp.caliconography.domain.Post;
@@ -29,7 +35,7 @@ public class PostSearchRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Post> searchTitleOrSummary(String keyword) {
+	public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable) {
 		System.out.println("############## repo: keyword:" + keyword);
 		FullTextEntityManager fullTextEntityManager = createFullTextEntityManager(entityManager);
 
@@ -48,8 +54,26 @@ public class PostSearchRepository {
 		// acc.must(c).asInstanceOf[BooleanJunction[BooleanJunction[_]]]
 		// }.createQuery
 
-		Query query = queryBuilder.keyword().onFields("body").matching(keyword).createQuery();
+		Query query = queryBuilder
+				.keyword()
+				.onFields("body")
+				.matching(keyword)
+				.createQuery();
+		// createdAtのみでソートの想定
+		String sortField = pageable.getSort().iterator().next().getProperty();
+		FullTextQuery fullTextQuery = fullTextEntityManager
+				.createFullTextQuery(query, Post.class)
+				.setSort(new Sort(new SortField(sortField, Type.LONG, true)));
+		
+		// 件数を先に取得しておく
+		long total = fullTextQuery.getResultSize();
+		
+		// ページネーション用
+		List<Post> postList = fullTextQuery
+			.setMaxResults(pageable.getPageSize())
+			.setFirstResult(pageable.getPageSize() * pageable.getPageNumber())
+			.getResultList();
 
-		return fullTextEntityManager.createFullTextQuery(query, Post.class).getResultList();
+		return new PageImpl<>(postList, pageable, total);
 	}
 }

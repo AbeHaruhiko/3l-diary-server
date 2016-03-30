@@ -10,9 +10,11 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,6 +46,8 @@ public class Post implements Serializable {
 	@Column(nullable = false)
 	private String username;
 
+	@Field
+	@DateBridge(resolution = Resolution.SECOND)
 	@Column(nullable = false)
 	private Date createdAt;
 

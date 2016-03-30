@@ -55,17 +55,33 @@ public class PostRestController {
 			@QueryParam("page") @DefaultValue("0") int page,
 	        @QueryParam("size") @DefaultValue("20") int size,
 	        @QueryParam("sort") @DefaultValue("createdAt") List<String> sort,
-	        @QueryParam("direction") @DefaultValue("desc") String direction) {
+	        @QueryParam("direction") @DefaultValue("desc") String direction,
+	        @QueryParam("q") @DefaultValue("") String keyword) {
 		
 		System.out.println("############### page:" + page + ", size:" + size + ", sort:" + sort + ", direction:" + direction);
-		Page<Post> posts = postService.findAll(
-				new PageRequest(
-	                    page, 
-	                    size, 
-	                    Sort.Direction.fromString(direction), 
-	                    sort.toArray(new String[0])
-	            )
-		);
+		
+		Page<Post> posts = null;
+		if ("".equals(keyword)) {
+			// 検索でない
+			posts = postService.findAll(
+					new PageRequest(
+		                    page, 
+		                    size, 
+		                    Sort.Direction.fromString(direction), 
+		                    sort.toArray(new String[0])
+		            )
+			);
+		} else {
+			// 検索のとき
+			postService.findAsFullTextSearch(keyword,
+					new PageRequest(
+		                    page, 
+		                    size, 
+		                    Sort.Direction.fromString(direction), 
+		                    sort.toArray(new String[0])
+		            )
+			);
+		}
 		return posts;
 	}
 
@@ -121,11 +137,11 @@ public class PostRestController {
 		postService.delete(id);
 	}
 	
-	@GET
-	@Path("/search")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Post> searchPost(@QueryParam("q") String keyword) {
-		System.out.println("############## api: keyword:" + keyword);
-		return postService.findAsFullTextSearch(keyword);
-	}
+//	@GET
+////	@Path("/search")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Page<Post> searchPost(@QueryParam("q") String keyword) {
+//		System.out.println("############## api: keyword:" + keyword);
+//		return postService.findAsFullTextSearch(keyword, );
+//	}
 }
