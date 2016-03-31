@@ -73,7 +73,7 @@ public class PostRestController {
 			);
 		} else {
 			// 検索のとき
-			postService.findAsFullTextSearch(keyword,
+			posts = postService.findAsFullTextSearch(keyword,
 					new PageRequest(
 		                    page, 
 		                    size, 

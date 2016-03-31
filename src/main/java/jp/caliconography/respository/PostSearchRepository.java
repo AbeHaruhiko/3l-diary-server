@@ -1,5 +1,6 @@
 package jp.caliconography.respository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -11,6 +12,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortField.Type;
+import org.hibernate.search.exception.EmptyQueryException;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
@@ -54,11 +56,17 @@ public class PostSearchRepository {
 		// acc.must(c).asInstanceOf[BooleanJunction[BooleanJunction[_]]]
 		// }.createQuery
 
-		Query query = queryBuilder
-				.keyword()
-				.onFields("body")
-				.matching(keyword)
-				.createQuery();
+		Query query;
+		try {
+			query = queryBuilder
+					.keyword()
+					.onFields("body")
+					.matching(keyword)
+					.createQuery();
+		} catch (EmptyQueryException e) {
+			return new PageImpl<>(new ArrayList<Post>(), pageable, 0);
+		}
+		
 		// createdAtのみでソートの想定
 		String sortField = pageable.getSort().iterator().next().getProperty();
 		FullTextQuery fullTextQuery = fullTextEntityManager
