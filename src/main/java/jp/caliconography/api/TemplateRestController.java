@@ -42,8 +42,8 @@ import jp.caliconography.domain.Post;
 import jp.caliconography.service.PostService;
 
 @Named
-@Path("/api/posts")
-public class PostRestController {
+@Path("/api/templates")
+public class TemplateRestController {
 
 	@Autowired
 	PostService postService;
@@ -126,9 +126,22 @@ public class PostRestController {
 	}
 
 //	// 削除
+//	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//	public void deletePost(@PathVariable Integer id) {
+//		PostService.delete(id);
+//	}
 	@DELETE
 	@Path("{id}")
 	public void deletePost(@PathParam("id") String id) {
 		postService.delete(id);
 	}
+	
+//	@GET
+////	@Path("/search")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Page<Post> searchPost(@QueryParam("q") String keyword) {
+//		System.out.println("############## api: keyword:" + keyword);
+//		return postService.findAsFullTextSearch(keyword, );
+//	}
 }
