@@ -12,11 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.DateBridge;
-import org.hibernate.search.annotations.DocumentId;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Resolution;
 
 import lombok.AllArgsConstructor;
@@ -43,8 +39,8 @@ public class Template implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	private List<TemplateItem> templateItems;
+//	@OneToMany(cascade = { CascadeType.ALL })
+//	private List<TemplateItem> templateItems;
 	
 	@Column(nullable = false)
 	private String username;
