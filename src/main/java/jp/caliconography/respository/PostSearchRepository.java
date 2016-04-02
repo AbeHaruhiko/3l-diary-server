@@ -2,9 +2,6 @@ package jp.caliconography.respository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
