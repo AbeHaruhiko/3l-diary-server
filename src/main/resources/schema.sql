@@ -28,6 +28,34 @@ CREATE
             ,username varchar_ignorecase (50) NOT NULL
             ,created_at timestamp NOT NULL
             ,updated_at timestamp NOT NULL
+            ,CONSTRAINT fk_posts_users FOREIGN KEY (username) REFERENCES users (username)
+        )
+;
+
+CREATE
+    TABLE
+    	IF NOT EXISTS
+        templates (
+        	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
+            ,username varchar_ignorecase (50) NOT NULL
+            ,created_at timestamp NOT NULL
+            ,updated_at timestamp NOT NULL
+            ,CONSTRAINT fk_templates_users FOREIGN KEY (username) REFERENCES users (username)
+        )
+;
+
+CREATE
+    TABLE
+    	IF NOT EXISTS
+        template_items (
+        	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
+        	, template_id varchar_ignorecase (37) NOT NULL
+        	,body varchar_ignorecase (200) NOT NULL
+            ,username varchar_ignorecase (50) NOT NULL
+            ,created_at timestamp NOT NULL
+            ,updated_at timestamp NOT NULL
+            ,CONSTRAINT fk_template_items_users FOREIGN KEY (username) REFERENCES users (username)
+            ,CONSTRAINT fk_template_items_templates FOREIGN KEY (template_id) REFERENCES templates (id)
         )
 ;
 
