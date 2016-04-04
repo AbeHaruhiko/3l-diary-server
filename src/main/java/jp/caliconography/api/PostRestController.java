@@ -142,17 +142,7 @@ public class PostRestController {
 		
 		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		int totalPostCount = postService.countByUsername(principal.getUsername());
-		Random random = new Random();
-		int randomPosition = random.nextInt(totalPostCount);
-		return postService.findByUsername(
-				new PageRequest(
-						randomPosition,
-						1,
-						Sort.Direction.DESC,
-						"createdAt"
-				),
-				principal.getUsername()
+		return postService.findAtRandomByUsername(principal.getUsername()
 		);
 	}
 }
