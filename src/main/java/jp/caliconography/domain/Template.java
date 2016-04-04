@@ -1,10 +1,18 @@
 package jp.caliconography.domain;
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+
+import javax.persistence.OneToMany;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -33,15 +41,20 @@ public class Template implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
-//	@OneToMany(cascade = { CascadeType.ALL })
-//	private List<TemplateItem> templateItems;
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumns({
+        @JoinColumn(name = "username", referencedColumnName = "username"),
+        @JoinColumn(name = "templateId", referencedColumnName = "id")
+    })
+//	@JoinColumn(name = "username")
+	private List<TemplateItem> templateItems;
 	
 	@Column(nullable = false)
 	private String username;
 
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private Date createdAt;
 
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private Date updatedAt;
 }

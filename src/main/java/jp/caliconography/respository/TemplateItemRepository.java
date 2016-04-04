@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import jp.caliconography.domain.Template;
+import jp.caliconography.domain.TemplateItem;
 
 @Repository
-public interface TemplateRepository extends JpaRepository<Template, String> {
+public interface TemplateItemRepository extends JpaRepository<TemplateItem, String> {
 
-	@Query(value ="select distinct x from Template x join fetch x.templateItems order by x.createdAt desc")
-//	@Query("select x from Template x order by x.createdAt desc")
-	List<Template> findAllOrderByName();
+	@Query(value ="select distinct x from TemplateItem x order by x.createdAt desc")
+	List<TemplateItem> findAllOrderByName();
 }

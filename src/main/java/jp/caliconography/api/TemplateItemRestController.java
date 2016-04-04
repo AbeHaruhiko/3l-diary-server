@@ -25,42 +25,43 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestBody;
 import jp.caliconography.domain.Template;
-import jp.caliconography.service.TemplateService;
+import jp.caliconography.domain.TemplateItem;
+import jp.caliconography.service.TemplateItemService;
 
 @Named
-@Path("/api/templates")
-public class TemplateRestController {
+@Path("/api/templates/items")
+public class TemplateItemRestController {
 
 	@Autowired
-	TemplateService TemplateService;
+	TemplateItemService TemplateItemService;
 
 	// 全件取得
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Template> getTemplates() {
-		return TemplateService.findAll();
+	public List<TemplateItem> getTemplateItems() {
+		return TemplateItemService.findAll();
 	}
 
 	// 一件取得
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Template getTemplate(@PathParam("id") String id) {
-		return TemplateService.findOne(id);
+	public TemplateItem getTemplateItem(@PathParam("id") String id) {
+		return TemplateItemService.findOne(id);
 	}
 
 	// 新規作成
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response TemplateTemplates(Template Template, @Context UriInfo uriInfo) {
+	public Response TemplateTemplateItems(TemplateItem TemplateItem, @Context UriInfo uriInfo) {
 		
 		// 処理時刻をセット
 		Date now = new Date();
-		Template.setCreatedAt(now);
-		Template.setUpdatedAt(now);
+		TemplateItem.setCreatedAt(now);
+		TemplateItem.setUpdatedAt(now);
 		
-		Template created = TemplateService.create(Template);
+		TemplateItem created = TemplateItemService.create(TemplateItem);
 		URI uri = uriInfo.getAbsolutePathBuilder().path(created.getId()).build();
 		return Response.created(uri).entity(created).build();
 	}
@@ -70,19 +71,19 @@ public class TemplateRestController {
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Template putTemplate(@PathParam("id") String id, @RequestBody Template Template) {
-		Template.setId(id);
+	public TemplateItem putTemplateItem(@PathParam("id") String id, @RequestBody TemplateItem TemplateItem) {
+		TemplateItem.setId(id);
 		
 		// 処理時刻をセット
 		Date now = new Date();
-		Template.setUpdatedAt(now);
+		TemplateItem.setUpdatedAt(now);
 
-		return TemplateService.update(Template);
+		return TemplateItemService.update(TemplateItem);
 	}
 
 	@DELETE
 	@Path("{id}")
-	public void deleteTemplate(@PathParam("id") String id) {
-		TemplateService.delete(id);
+	public void deleteTemplateItem(@PathParam("id") String id) {
+		TemplateItemService.delete(id);
 	}
 }

@@ -32,11 +32,13 @@ CREATE
         )
 ;
 
+--drop table templates;
 CREATE
     TABLE
     	IF NOT EXISTS
         templates (
         	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
+        	,name varchar_ignorecase (50) NOT NULL
             ,username varchar_ignorecase (50) NOT NULL
             ,created_at timestamp NOT NULL
             ,updated_at timestamp NOT NULL
@@ -44,12 +46,13 @@ CREATE
         )
 ;
 
+--drop table template_items;
 CREATE
     TABLE
     	IF NOT EXISTS
         template_items (
         	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
-        	, template_id varchar_ignorecase (37) NOT NULL
+        	,template_id varchar_ignorecase (37) NOT NULL
         	,body varchar_ignorecase (200) NOT NULL
             ,username varchar_ignorecase (50) NOT NULL
             ,created_at timestamp NOT NULL

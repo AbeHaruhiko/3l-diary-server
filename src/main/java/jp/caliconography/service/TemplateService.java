@@ -1,8 +1,8 @@
 package jp.caliconography.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import jp.caliconography.domain.Template;
 import jp.caliconography.respository.TemplateRepository;
@@ -12,8 +12,8 @@ public class TemplateService {
 	@Autowired
 	TemplateRepository TemplateRepository;
 
-	public Page<Template> findAll(Pageable pageable) {
-		return TemplateRepository.findAllOrderByName(pageable);
+	public List<Template> findAll() {
+		return TemplateRepository.findAllOrderByName();
 	}
 
 	public Template findOne(String id) {
