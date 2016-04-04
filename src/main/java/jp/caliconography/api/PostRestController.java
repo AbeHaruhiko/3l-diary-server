@@ -1,7 +1,6 @@
 package jp.caliconography.api;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
