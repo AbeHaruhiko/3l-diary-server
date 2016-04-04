@@ -142,7 +142,6 @@ public class PostRestController {
 		
 		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		return postService.findAtRandomByUsername(principal.getUsername()
-		);
+		return postService.findAtRandomByUsername(principal.getUsername());
 	}
 }
