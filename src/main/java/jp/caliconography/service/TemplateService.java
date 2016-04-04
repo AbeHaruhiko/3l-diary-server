@@ -12,8 +12,8 @@ public class TemplateService {
 	@Autowired
 	TemplateRepository TemplateRepository;
 
-	public List<Template> findAll() {
-		return TemplateRepository.findAllOrderByName();
+	public List<Template> findByUsernameOrderByCreatedAt(String username) {
+		return TemplateRepository.findByUsernameOrderByCreatedAt(username);
 	}
 
 	public Template findOne(String id) {

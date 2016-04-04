@@ -22,8 +22,8 @@ public class PostService {
 	// return PostRepository.save(Post);
 	// }
 
-	public Page<Post> findAll(Pageable pageable) {
-		return postRepository.findAllOrderByName(pageable);
+	public Page<Post> findByUsername(Pageable pageable, String username) {
+		return postRepository.findByUsername(username, pageable);
 	}
 
 	public Post findOne(String id) {
@@ -43,8 +43,8 @@ public class PostService {
 	}
 	
 	 @Transactional(readOnly = true)
-	 public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable) {
+	 public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable, String username) {
 		 System.out.println("############## service: keyword:" + keyword);
-		 return postSearchRepository.findAsFullTextSearch(keyword, pageable);
+		 return postSearchRepository.findAsFullTextSearch(keyword, pageable, username);
 	}
 }

@@ -23,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import jp.caliconography.domain.Post;
 import jp.caliconography.service.PostService;
@@ -42,20 +44,25 @@ public class PostRestController {
 	        @QueryParam("size") @DefaultValue("20") int size,
 	        @QueryParam("sort") @DefaultValue("createdAt") List<String> sort,
 	        @QueryParam("direction") @DefaultValue("desc") String direction,
-	        @QueryParam("q") @DefaultValue("") String keyword) {
+	        @QueryParam("q") @DefaultValue("") String keyword,
+	        // injectされる模様。↓
+	        SecurityContextHolder securityContextHolder) {
 		
+		@SuppressWarnings("static-access")
+		User principal = (User) securityContextHolder.getContext().getAuthentication().getPrincipal();
 		System.out.println("############### page:" + page + ", size:" + size + ", sort:" + sort + ", direction:" + direction);
 		
 		Page<Post> posts = null;
 		if ("".equals(keyword)) {
 			// 検索でない
-			posts = postService.findAll(
+			posts = postService.findByUsername(
 					new PageRequest(
 		                    page, 
 		                    size, 
 		                    Sort.Direction.fromString(direction), 
 		                    sort.toArray(new String[0])
-		            )
+		            ),
+					principal.getUsername()
 			);
 		} else {
 			// 検索のとき
@@ -65,7 +72,8 @@ public class PostRestController {
 		                    size, 
 		                    Sort.Direction.fromString(direction), 
 		                    sort.toArray(new String[0])
-		            )
+		            ),
+					principal.getUsername()
 			);
 		}
 		return posts;

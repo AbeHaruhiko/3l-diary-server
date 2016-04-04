@@ -34,7 +34,7 @@ public class PostSearchRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable) {
+	public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable, String username) {
 		System.out.println("############## repo: keyword:" + keyword);
 		FullTextEntityManager fullTextEntityManager = createFullTextEntityManager(entityManager);
 
