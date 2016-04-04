@@ -34,12 +34,9 @@ public class TemplateRestController {
 	// 全件取得
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Template> getTemplates(
-	        // injectされる模様。↓
-	        SecurityContextHolder securityContextHolder) {
+	public List<Template> getTemplates() {
 
-		@SuppressWarnings("static-access")
-		User principal = (User) securityContextHolder.getContext().getAuthentication().getPrincipal();
+		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		return TemplateService.findByUsernameOrderByCreatedAt(principal.getUsername());
 	}

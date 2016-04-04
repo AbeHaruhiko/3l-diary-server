@@ -44,12 +44,9 @@ public class PostRestController {
 	        @QueryParam("size") @DefaultValue("20") int size,
 	        @QueryParam("sort") @DefaultValue("createdAt") List<String> sort,
 	        @QueryParam("direction") @DefaultValue("desc") String direction,
-	        @QueryParam("q") @DefaultValue("") String keyword,
-	        // injectされる模様。↓
-	        SecurityContextHolder securityContextHolder) {
+	        @QueryParam("q") @DefaultValue("") String keyword) {
 		
-		@SuppressWarnings("static-access")
-		User principal = (User) securityContextHolder.getContext().getAuthentication().getPrincipal();
+		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		System.out.println("############### page:" + page + ", size:" + size + ", sort:" + sort + ", direction:" + direction);
 		
 		Page<Post> posts = null;
