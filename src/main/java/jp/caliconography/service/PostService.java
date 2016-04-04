@@ -42,6 +42,10 @@ public class PostService {
 		postRepository.delete(id);
 	}
 	
+	public int countByUsername(String username) {
+		return postRepository.countByUsername(username);
+	}
+	
 	 @Transactional(readOnly = true)
 	 public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable, String username) {
 		 System.out.println("############## service: keyword:" + keyword);

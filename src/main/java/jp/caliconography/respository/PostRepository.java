@@ -18,4 +18,6 @@ public interface PostRepository extends JpaRepository<Post, String> {
 
 	// 命名規則でSQL発行
 	Page<Post> findByUsername(String username, Pageable pageable);
+	
+	int countByUsername(String username);
 }

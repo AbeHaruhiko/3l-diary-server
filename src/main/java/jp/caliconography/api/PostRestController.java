@@ -1,7 +1,10 @@
 package jp.caliconography.api;
 import java.net.URI;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -115,10 +118,42 @@ public class PostRestController {
 		return postService.update(post);
 	}
 
-//	// 削除
+	// 削除
 	@DELETE
 	@Path("{id}")
 	public void deletePost(@PathParam("id") String id) {
 		postService.delete(id);
+	}
+
+	// 件数
+	@GET
+	@Path("/count")
+	public long count() {
+		
+		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		return postService.countByUsername(principal.getUsername());
+	}
+
+	// 過去の投稿
+	@GET
+	@Path("/past")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Page<Post> getPastPost() throws NoSuchAlgorithmException {
+		
+		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		int totalPostCount = postService.countByUsername(principal.getUsername());
+		Random random = new Random();
+		int randomPosition = random.nextInt(totalPostCount);
+		return postService.findByUsername(
+				new PageRequest(
+						randomPosition,
+						1,
+						Sort.Direction.DESC,
+						"createdAt"
+				),
+				principal.getUsername()
+		);
 	}
 }

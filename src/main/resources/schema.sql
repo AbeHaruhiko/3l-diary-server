@@ -63,6 +63,23 @@ CREATE
 ;
 
 
+--drop table past_post;
+CREATE
+    TABLE
+    	IF NOT EXISTS
+        past_posts (
+        	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
+        	,post_id varchar_ignorecase (37) NOT NULL
+        	,date_for varchar_ignorecase (200) NOT NULL
+            ,username varchar_ignorecase (50) NOT NULL
+            ,created_at timestamp NOT NULL
+            ,updated_at timestamp NOT NULL
+            ,CONSTRAINT fk_past_posts_users FOREIGN KEY (username) REFERENCES users (username)
+            ,CONSTRAINT fk_past_posts_posts FOREIGN KEY (post_id) REFERENCES posts (id)
+        )
+;
+
+
 CREATE
     UNIQUE index
     	IF NOT EXISTS
