@@ -1,11 +1,13 @@
 package jp.caliconography.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.convert.ThreeTenBackPortConverters.LocalDateTimeToDateConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -38,8 +40,10 @@ public class PostService {
 	@SuppressWarnings({ "serial", "unchecked" })
 	public Page<Post> findAtRandomByUsername(String username) {
 		
+//		Date now = new Date();
+		LocalDateTime now = LocalDateTime.now();
 		// すでにその日用の過去投稿が保存されているか確認
-		PastPost pastPost = pastPostRepository.findByForDateAndByUsername(new Date(), username);
+		PastPost pastPost = pastPostRepository.findByForDateAndUsername(now.toLocalDate(), username);
 		if (pastPost == null) {
 			// まだないので過去投稿から検索
 			int totalPostCount = this.countByUsername(username);
@@ -57,11 +61,10 @@ public class PostService {
 			);
 			if (page != null && page.getSize() > 0) {
 				Post post = page.getContent().get(0);
-				pastPostRepository.save((Iterable<PastPost>) post);
+				pastPostRepository.save(new PastPost(null, post.getId(), now.toLocalDate(), username, now, now));
 			}
+			return page;
 			
-			
-			return 
 		} else {
 			// ある
 			Post post = this.findOne(pastPost.getId());

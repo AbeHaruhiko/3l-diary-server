@@ -1,6 +1,7 @@
 package jp.caliconography.domain;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,18 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.search.annotations.DateBridge;
-import org.hibernate.search.annotations.DocumentId;
-import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Resolution;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "past_posts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,14 +37,14 @@ public class PastPost implements Serializable {
 	private String postId;
 
 	@Column(nullable = false)
-	private Date forDate;
+	private LocalDate forDate;
 
 	@Column(nullable = false)
 	private String username;
 
 	@Column(nullable = false)
-	private Date createdAt;
+	private LocalDateTime createdAt;
 
 	@Column(nullable = false)
-	private Date updatedAt;
+	private LocalDateTime updatedAt;
 }
