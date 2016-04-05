@@ -63,7 +63,7 @@ CREATE
 ;
 
 
-drop table past_posts;
+--drop table past_posts;
 CREATE
     TABLE
     	IF NOT EXISTS

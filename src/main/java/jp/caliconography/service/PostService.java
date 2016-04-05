@@ -1,13 +1,12 @@
 package jp.caliconography.service;
 
-import java.time.LocalDate;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.convert.ThreeTenBackPortConverters.LocalDateTimeToDateConverter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -37,13 +36,14 @@ public class PostService {
 		return postRepository.findByUsername(username, pageable);
 	}
 
-	@SuppressWarnings({ "serial", "unchecked" })
+	@SuppressWarnings({ "serial" })
 	public Page<Post> findAtRandomByUsername(String username) {
 		
 //		Date now = new Date();
 		LocalDateTime now = LocalDateTime.now();
 		// すでにその日用の過去投稿が保存されているか確認
-		PastPost pastPost = pastPostRepository.findByForDateAndUsername(now.toLocalDate(), username);
+		PastPost pastPost = pastPostRepository.findByForDateAndUsername(Date.valueOf(now.toLocalDate()), username);
+		System.out.println("############### pastPost: " + pastPost);
 		if (pastPost == null) {
 			// まだないので過去投稿から検索
 			int totalPostCount = this.countByUsername(username);
@@ -61,13 +61,16 @@ public class PostService {
 			);
 			if (page != null && page.getSize() > 0) {
 				Post post = page.getContent().get(0);
-				pastPostRepository.save(new PastPost(null, post.getId(), now.toLocalDate(), username, now, now));
+				System.out.println("################ " + now);
+				pastPostRepository.save(new PastPost(null, post.getId(), Date.valueOf(now.toLocalDate()), username, Timestamp.valueOf(now), Timestamp.valueOf(now)));
 			}
 			return page;
 			
 		} else {
 			// ある
+			System.out.println("################ " + pastPost.getId());
 			Post post = this.findOne(pastPost.getId());
+			System.out.println(post);
 			return new PageImpl<Post>(new ArrayList<Post>(){{ add(post); }});
 		}
 		

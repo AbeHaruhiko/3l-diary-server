@@ -1,8 +1,5 @@
 package jp.caliconography.domain;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,14 +34,14 @@ public class PastPost implements Serializable {
 	private String postId;
 
 	@Column(nullable = false)
-	private LocalDate forDate;
+	private java.sql.Date forDate;
 
 	@Column(nullable = false)
 	private String username;
 
 	@Column(nullable = false)
-	private LocalDateTime createdAt;
+	private java.sql.Timestamp createdAt;
 
 	@Column(nullable = false)
-	private LocalDateTime updatedAt;
+	private java.sql.Timestamp updatedAt;
 }
