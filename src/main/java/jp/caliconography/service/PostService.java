@@ -68,8 +68,8 @@ public class PostService {
 			
 		} else {
 			// ある
-			System.out.println("################ " + pastPost.getId());
-			Post post = this.findOne(pastPost.getId());
+			System.out.println("################ " + pastPost.getPostId());
+			Post post = this.findOne(pastPost.getPostId());
 			System.out.println(post);
 			return new PageImpl<Post>(new ArrayList<Post>(){{ add(post); }});
 		}
