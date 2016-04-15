@@ -18,8 +18,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import jp.caliconography.domain.TemplateItem;
 import jp.caliconography.service.TemplateItemService;
@@ -34,11 +32,8 @@ public class TemplateItemRestController {
 	// 全件取得
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<TemplateItem> getTemplateItems() {
-
-		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		return TemplateItemService.findByUsernameOrderByCreatedAt(principal.getUsername());
+	public List<TemplateItem> getTemplateItems(String templateId) {
+		return TemplateItemService.findByTemplateIdOrderByCreatedAt(templateId);
 	}
 
 	// 一件取得

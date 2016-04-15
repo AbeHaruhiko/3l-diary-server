@@ -30,20 +30,16 @@ public class TemplateItem implements Serializable {
 	@GenericGenerator(name="system-uuid", strategy = "uuid2")
 	private String id;
 
-	@ManyToOne(targetEntity=Template.class)
-    @JoinColumn(name = "templateId", referencedColumnName = "id")
-//	@Column(nullable = false)
+	@Column(nullable = false, insertable = false, updatable = false)
 	private String templateId;
 
 	@Column(nullable = false)
 	private String body;
 
-	@Column(nullable = false)
-	private String username;
 
-//	@Column(nullable = false)
+	@Column(nullable = false)
 	private Date createdAt;
 
-//	@Column(nullable = false)
+	@Column(nullable = false)
 	private Date updatedAt;
 }

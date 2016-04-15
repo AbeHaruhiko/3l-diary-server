@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -42,11 +41,7 @@ public class Template implements Serializable {
 	private String name;
 
 	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumns({
-        @JoinColumn(name = "username", referencedColumnName = "username"),
-        @JoinColumn(name = "templateId", referencedColumnName = "id")
-    })
-//	@JoinColumn(name = "username")
+    @JoinColumn(name = "templateId", referencedColumnName = "id", nullable = false)
 	private List<TemplateItem> templateItems;
 	
 	@Column(nullable = false)

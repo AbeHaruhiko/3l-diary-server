@@ -12,8 +12,8 @@ public class TemplateItemService {
 	@Autowired
 	TemplateItemRepository TemplateItemRepository;
 
-	public List<TemplateItem> findByUsernameOrderByCreatedAt(String username) {
-		return TemplateItemRepository.findByUsernameOrderByCreatedAt(username);
+	public List<TemplateItem> findByTemplateIdOrderByCreatedAt(String templateId) {
+		return TemplateItemRepository.findByTemplateIdOrderByCreatedAt(templateId);
 	}
 
 	public TemplateItem findOne(String id) {

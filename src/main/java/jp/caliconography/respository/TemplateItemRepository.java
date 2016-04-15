@@ -14,5 +14,5 @@ public interface TemplateItemRepository extends JpaRepository<TemplateItem, Stri
 	@Query(value ="select distinct x from TemplateItem x order by x.createdAt desc")
 	List<TemplateItem> findAllOrderByCreatedAt();
 	
-	List<TemplateItem> findByUsernameOrderByCreatedAt(String username);
+	List<TemplateItem> findByTemplateIdOrderByCreatedAt(String templateId);
 }

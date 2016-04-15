@@ -1,14 +1,16 @@
 package jp.caliconography.service;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import jp.caliconography.domain.Template;
 import jp.caliconography.domain.TemplateItem;
 import jp.caliconography.respository.TemplateItemRepository;
@@ -36,9 +38,6 @@ public class TemplateService {
 
 	public Template create(Template Template) {
 
-//		Template savedTemplate = TemplateRepository.save(Template);
-//		List<TemplateItem> templateItems = TemplateItemRepository.save(Template.getTemplateItems());
-		
 		return TemplateRepository.save(Template);
 	}
 

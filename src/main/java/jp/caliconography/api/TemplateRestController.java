@@ -59,6 +59,12 @@ public class TemplateRestController {
 		Date now = new Date();
 		Template.setCreatedAt(now);
 		Template.setUpdatedAt(now);
+		Template.getTemplateItems().forEach(item ->  {
+			item.setCreatedAt(now);
+			item.setUpdatedAt(now);
+		});
+
+
 		
 		Template created = TemplateService.create(Template);
 		URI uri = uriInfo.getAbsolutePathBuilder().path(created.getId()).build();
@@ -76,6 +82,7 @@ public class TemplateRestController {
 		// 処理時刻をセット
 		Date now = new Date();
 		Template.setUpdatedAt(now);
+		Template.getTemplateItems().forEach(item -> item.setUpdatedAt(now));
 
 		return TemplateService.update(Template);
 	}
