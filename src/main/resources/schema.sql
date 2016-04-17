@@ -53,6 +53,7 @@ CREATE
         template_items (
         	id varchar_ignorecase (37) NOT NULL PRIMARY KEY
         	,template_id varchar_ignorecase (37) NOT NULL
+        	,sequence int NOT NULL
         	,body varchar_ignorecase (200) NOT NULL
             ,created_at timestamp NOT NULL
             ,updated_at timestamp NOT NULL

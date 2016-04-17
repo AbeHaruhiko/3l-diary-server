@@ -1,6 +1,7 @@
 ## project
 db/
 *.rdb
+indexes
 
 ### Java
 *.class

@@ -34,6 +34,9 @@ public class TemplateItem implements Serializable {
 	private String templateId;
 
 	@Column(nullable = false)
+	private int sequence;
+	
+	@Column(nullable = false)
 	private String body;
 
 
