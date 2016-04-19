@@ -55,6 +55,11 @@ public class TemplateRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response TemplateTemplates(Template Template, @Context UriInfo uriInfo) {
 		
+		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		// ユーザ名をセット
+		Template.setUsername(principal.getUsername());
+		
 		// 処理時刻をセット
 		Date now = new Date();
 		Template.setCreatedAt(now);
