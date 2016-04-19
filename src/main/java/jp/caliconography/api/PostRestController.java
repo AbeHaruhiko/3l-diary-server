@@ -90,6 +90,11 @@ public class PostRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response postPosts(Post post, @Context UriInfo uriInfo) {
 		
+		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		// ユーザ名をセット
+		post.setUsername(principal.getUsername());
+
 		// 処理時刻をセット
 		Date now = new Date();
 		post.setCreatedAt(now);
