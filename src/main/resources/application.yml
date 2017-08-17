@@ -3,7 +3,7 @@ spring:
   main.banner-mode: CONSOLE
   jpa:
     hibernate:
-      ddl-auto: none  # domainを元にDDLを実行する（Drop & Createするかどうか）
+      ddl-auto: update  # domainを元にDDLを実行する（Drop & Createするかどうか）
     properties:
       hibernate:
         show_sql: true
@@ -25,3 +25,11 @@ spring:
     sqlScriptEncoding: UTF-8  #sqlファイルで日本語を使うための設定
   jersey:
     type: filter
+
+3l-diary:
+  firebase:
+    enabled: true
+    database:
+      url: https://bamboo-autumn-123412.firebaseio.com/
+    config:
+      path: pk.json
