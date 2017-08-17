@@ -63,15 +63,6 @@ public class PostRestController {
 			);
 		} else {
 			// 検索のとき
-			posts = postService.findAsFullTextSearch(keyword,
-					new PageRequest(
-		                    page, 
-		                    size, 
-		                    Sort.Direction.fromString(direction), 
-		                    sort.toArray(new String[0])
-		            ),
-					principal.getUsername()
-			);
 		}
 		return posts;
 	}

@@ -19,7 +19,6 @@ import jp.caliconography.domain.PastPost;
 import jp.caliconography.domain.Post;
 import jp.caliconography.respository.PastPostRepository;
 import jp.caliconography.respository.PostRepository;
-import jp.caliconography.respository.PostSearchRepository;
 
 @Service
 public class PostService {
@@ -28,9 +27,6 @@ public class PostService {
 
 	@Autowired
 	PastPostRepository pastPostRepository;
-
-	@Autowired
-	PostSearchRepository postSearchRepository;
 
 	public Page<Post> findByUsername(Pageable pageable, String username) {
 		return postRepository.findByUsername(username, pageable);
@@ -94,11 +90,5 @@ public class PostService {
 	
 	public int countByUsername(String username) {
 		return postRepository.countByUsername(username);
-	}
-	
-	 @Transactional(readOnly = true)
-	 public Page<Post> findAsFullTextSearch(String keyword, Pageable pageable, String username) {
-		 System.out.println("############## service: keyword:" + keyword);
-		 return postSearchRepository.findAsFullTextSearch(keyword, pageable, username);
 	}
 }

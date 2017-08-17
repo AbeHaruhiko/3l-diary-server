@@ -1,60 +1,52 @@
 buildscript {
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
-  }
+	ext {
+		kotlinVersion = '1.1.4'
+		springBootVersion = '1.5.6.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+	}
 }
-apply plugin: 'spring-boot'
-apply plugin: 'java'
-apply plugin: 'maven'
 
-group = 'jp.caliconography'
-version = '1.0.0-SNAPSHOT'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
 
-description = """Spring Boot Jersey Blank Project (from https://github.com/making/spring-boot-jersey-blank)"""
-
-sourceCompatibility = 8
-targetCompatibility = 8
-
-
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+compileKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+	kotlinOptions.jvmTarget = "1.8"
+}
 
 repositories {
-        
-    //maven { url "http://repo.maven.apache.org/maven2" }
-    mavenCentral()
+	mavenCentral()
 }
+
+
 dependencies {
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.3.3.RELEASE') {
-		//exclude(module: 'spring-webmvc')
-    }
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version:'1.3.3.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'1.3.3.RELEASE'
-    compile group: 'com.h2database', name: 'h2', version:'1.4.183'
-    compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version:'1.16'
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.3.3.RELEASE') {
-		exclude(module: 'commons-logging')
-    }
-    testCompile group: 'com.jayway.restassured', name: 'rest-assured', version:'2.3.3'
-    compile(group: 'org.projectlombok', name: 'lombok', version:'1.14.8') {
-       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
-       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
-       Please review and delete this closure when resolved. */
-    }
-
-    // devtools for hot-load etc.
-    compile("org.springframework.boot:spring-boot-devtools")
-    // 認証・認可
-    compile 'org.springframework.boot:spring-boot-starter-security:1.3.3.RELEASE'
-
-	// session, redis(@EnableRedisHttpSessionのため)
-	compile 'org.springframework.session:spring-session'
-	compile 'org.springframework.boot:spring-boot-starter-redis'
-	
-	// 全文検索
-//	compile 'org.hibernate:hibernate-search-orm:5.0.0.Final'
-//	compile 'org.apache.lucene:lucene-analyzers-kuromoji:4.10.2'
-	compile 'org.hibernate:hibernate-search-orm:5.3.0.Final'
-	compile 'org.apache.lucene:lucene-analyzers-kuromoji:4.10.4'
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.flywaydb:flyway-core')
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('org.springframework.boot:spring-boot-starter-jersey')
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    compile('org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	runtime('mysql:mysql-connector-java')
+	runtime('org.postgresql:postgresql')
+	compileOnly('org.projectlombok:lombok')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
 }
