@@ -33,3 +33,11 @@ spring:
       url: https://bamboo-autumn-123412.firebaseio.com/
     config:
       path: pk.json
+
+server:
+  port: 8443
+  ssl:
+    key-store: ".keystore"
+    key-store-password: changeit
+    key-password: changeit
+    #keyAlias: springboot-tomcat

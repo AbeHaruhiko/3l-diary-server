@@ -1,24 +1,7 @@
 package jp.caliconography.api;
-import java.net.URI;
-import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.List;
-import javax.inject.Named;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
+import jp.caliconography.domain.Post;
+import jp.caliconography.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,8 +9,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
-import jp.caliconography.domain.Post;
-import jp.caliconography.service.PostService;
+
+import javax.inject.Named;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.List;
 
 @Named
 @Path("/api/posts")
@@ -46,7 +38,7 @@ public class PostRestController {
 	        @QueryParam("direction") @DefaultValue("desc") String direction,
 	        @QueryParam("q") @DefaultValue("") String keyword) {
 		
-		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		System.out.println("############### page:" + page + ", size:" + size + ", sort:" + sort + ", direction:" + direction);
 		
 		Page<Post> posts = null;
@@ -59,7 +51,8 @@ public class PostRestController {
 		                    Sort.Direction.fromString(direction), 
 		                    sort.toArray(new String[0])
 		            ),
-					principal.getUsername()
+//					principal.getUsername()
+                    ""
 			);
 		} else {
 			// 検索のとき
