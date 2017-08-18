@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
@@ -65,23 +66,25 @@ public class SecurityConfig {
 
 		@Override
 		public void configure(WebSecurity web) throws Exception {
-//			web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources",
-//					"/configuration/security", "/swagger-ui.html", "/webjars/**", "/v2/swagger.json");
+			web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources",
+					"/configuration/security", "/swagger-ui.html", "/webjars/**", "/v2/swagger.json");
 		}
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			if (firebaseEnabled) {
-//				http.addFilterBefore(tokenAuthorizationFilter(), BasicAuthenticationFilter.class).authorizeRequests()//
 
-//						.antMatchers("/api/open/**").hasAnyRole(Roles.ANONYMOUS)//
-//						.antMatchers("/api/**").hasRole(Roles.USER)//
+
+			if (firebaseEnabled) {
+				http.addFilterBefore(tokenAuthorizationFilter(), BasicAuthenticationFilter.class).authorizeRequests()//
+//						.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//						.antMatchers("/api/open/**").hasAnyRole(Roles.ANONYMOUS)
 //						.antMatchers("/api/admin/**").hasAnyRole(Roles.ADMIN)//
+//						.antMatchers("/api/**").hasRole(Roles.USER)//
 //						.antMatchers("/health/**").hasAnyRole(Roles.ADMIN)//
 //						.antMatchers("/**").denyAll()//
-//						.and().csrf().disable()//
-//						.anonymous().authorities(Roles.ROLE_ANONYMOUS);//
-//					.antMatchers("/**").permitAll();
+						.antMatchers("/**").permitAll();
+//						.and().csrf().disable();
+//						.anonymous().authorities	(Roles.ROLE_ANONYMOUS);//
 			} else {
 //				http.httpBasic().and().authorizeRequests()//
 //
@@ -102,5 +105,24 @@ public class SecurityConfig {
 			return new FirebaseFilter(firebaseService);
 		}
 
+//		@Bean
+//		CorsConfigurationSource corsConfigurationSource() {
+//			CorsConfiguration configuration = new CorsConfiguration();
+////			configuration.setAllowedOrigins(Arrays.asList("http://localhost:8888"));
+////			configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+////			configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-Authorization-Firebase"));
+//			UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//			configuration.setAllowCredentials(true);
+//			configuration.addAllowedOrigin("http://localhost:8888");
+//			configuration.addAllowedHeader("*");
+//			configuration.addAllowedMethod("*");
+//
+//			source.registerCorsConfiguration("/**", configuration);
+//			FilterRegistrationBean bean = new FilterRegistrationBean();
+//			bean.setFilter(new CorsFilter(source));
+//			bean.setOrder(0);
+//
+//			return source;
+//		}
 	}
 }

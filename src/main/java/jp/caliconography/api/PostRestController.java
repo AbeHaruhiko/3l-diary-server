@@ -28,6 +28,16 @@ public class PostRestController {
 	@Autowired
 	PostService postService;
 
+    @OPTIONS
+    public Response cors() {
+        return Response.ok()
+//            .header("Access-Control-Allow-Origin", "http://localhost:8888")
+//            .header("Access-Control-Allow-Methods",
+//                    "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+//            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, X-Authorization-Firebase")
+            .build();
+    }
+
 	// 全件取得
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

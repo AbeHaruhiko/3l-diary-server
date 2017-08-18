@@ -1,6 +1,5 @@
 package jp.caliconography.conf.auth.firebase;
 
-import jp.caliconography.service.exception.FirebaseUserNotExistsException;
 import jp.caliconography.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,11 +29,11 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 		FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
 		UserDetails details = userService.loadUserByUsername(authenticationToken.getName());
 		if (details == null) {
-			throw new FirebaseUserNotExistsException();
+//			throw new FirebaseUserNotExistsException();
 		}
 
 		authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
-				details.getAuthorities());
+				null);
 
 		return authenticationToken;
 	}
