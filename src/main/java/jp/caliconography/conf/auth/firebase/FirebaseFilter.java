@@ -35,9 +35,9 @@ public class FirebaseFilter extends OncePerRequestFilter {
 			try {
 				FirebaseTokenHolder holder = firebaseService.parseToken(xAuth);
 
-				String userName = holder.getUid();
+				String uid = holder.getUid();
 
-				Authentication auth = new FirebaseAuthenticationToken(userName, holder);
+				Authentication auth = new FirebaseAuthenticationToken(uid, holder);
 				SecurityContextHolder.getContext().setAuthentication(auth);
 
 				filterChain.doFilter(request, response);

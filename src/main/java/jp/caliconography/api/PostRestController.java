@@ -47,8 +47,8 @@ public class PostRestController {
 	        @QueryParam("sort") @DefaultValue("createdAt") List<String> sort,
 	        @QueryParam("direction") @DefaultValue("desc") String direction,
 	        @QueryParam("q") @DefaultValue("") String keyword) {
-		
-//		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		String uid = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		System.out.println("############### page:" + page + ", size:" + size + ", sort:" + sort + ", direction:" + direction);
 		
 		Page<Post> posts = null;
@@ -61,8 +61,7 @@ public class PostRestController {
 		                    Sort.Direction.fromString(direction), 
 		                    sort.toArray(new String[0])
 		            ),
-//					principal.getUsername()
-                    ""
+					uid
 			);
 		} else {
 			// 検索のとき

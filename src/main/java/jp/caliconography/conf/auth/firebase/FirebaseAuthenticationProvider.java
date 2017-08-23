@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
@@ -27,12 +26,12 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 		}
 
 		FirebaseAuthenticationToken authenticationToken = (FirebaseAuthenticationToken) authentication;
-		UserDetails details = userService.loadUserByUsername(authenticationToken.getName());
-		if (details == null) {
+//		UserDetails details = userService.loadUserByUsername(authenticationToken.getName());
+//		if (details == null) {
 //			throw new FirebaseUserNotExistsException();
-		}
+//		}
 
-		authenticationToken = new FirebaseAuthenticationToken(details, authentication.getCredentials(),
+		authenticationToken = new FirebaseAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(),
 				null);
 
 		return authenticationToken;
