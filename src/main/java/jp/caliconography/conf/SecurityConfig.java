@@ -82,8 +82,8 @@ public class SecurityConfig {
 //						.antMatchers("/api/**").hasRole(Roles.USER)//
 //						.antMatchers("/health/**").hasAnyRole(Roles.ADMIN)//
 //						.antMatchers("/**").denyAll()//
-						.antMatchers("/**").permitAll();
-//						.and().csrf().disable();
+						.antMatchers("/**").permitAll()
+						.and().csrf().disable();
 //						.anonymous().authorities	(Roles.ROLE_ANONYMOUS);//
 			} else {
 //				http.httpBasic().and().authorizeRequests()//

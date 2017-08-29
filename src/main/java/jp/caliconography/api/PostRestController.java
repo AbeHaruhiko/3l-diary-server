@@ -28,15 +28,15 @@ public class PostRestController {
 	@Autowired
 	PostService postService;
 
-    @OPTIONS
-    public Response cors() {
-        return Response.ok()
+//    @OPTIONS
+//    public Response cors() {
+//        return Response.ok()
 //            .header("Access-Control-Allow-Origin", "http://localhost:8888")
 //            .header("Access-Control-Allow-Methods",
 //                    "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 //            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, X-Authorization-Firebase")
-            .build();
-    }
+//            .build();
+//    }
 
 	// 全件取得
 	@GET
@@ -82,11 +82,11 @@ public class PostRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response postPosts(Post post, @Context UriInfo uriInfo) {
-		
-		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		String uid = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		// ユーザ名をセット
-		post.setUsername(principal.getUsername());
+		post.setUsername(uid);
 
 		// 処理時刻をセット
 		Date now = new Date();
